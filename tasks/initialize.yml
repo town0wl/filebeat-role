@@ -1,0 +1,17 @@
+---
+- name: Enable and configure the filebeat system module
+  become: true
+  command:
+    chdir: /usr/share/filebeat/bin
+    cmd: filebeat modules enable system
+  register: filebeat_modules_changed
+  changed_when: filebeat_modules_changed != 'Module system is already enabled'
+  notify: restart Filebeat
+- name: Start Filebeat
+  become: true
+  command:
+    chdir: /usr/share/filebeat/bin
+    cmd: filebeat setup
+  register: filebeat_setuped
+  until: filebeat_setuped is succeeded
+  notify: restart Filebeat

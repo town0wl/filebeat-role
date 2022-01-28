@@ -1,0 +1,12 @@
+---
+- name: Add RPM validation key
+  become: true
+  rpm_key:
+    key: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    validate_certs: true
+- name: Install Filebeat
+  become: true
+  yum:
+    name: "/tmp/filebeat-{{ filebeat_version }}-x86_64.rpm"
+    state: present
+  notify: restart Filebeat
