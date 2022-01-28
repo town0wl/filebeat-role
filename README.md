@@ -1,38 +1,39 @@
-Role Name
+Filebeat role
 =========
 
-A brief description of the role goes here.
+Роль для установки, начальной конфигурации и запуска Filebeat на хостах с ОС: Debian, Ubuntu, CentOS, RHEL.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Поддерживаются только ОС семейств debian и EL.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+| Variable name | Default | Description |
+|-----------------------|----------|-------------------------|
+| filebeat_version | "7.14.0" | Параметр, который определяет какой версии Filebeat будет установлен |
+| filebeat_install_type | remote | При установке значения 'remote' загрузка дистрибутива происходит через управляющий хост ansible |
 
 Dependencies
-------------
+--------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Для начальной конфигурации Filebeat (/etc/filebeat/filebeat.yml) используются IP-адреса сервера Elasticsearch и сервера Kibana, которые считываются из ansible facts хостов с именем **elastic-host** и **kibana-host** соответственно.
+
+Tags
+--------------
+
+Первоначальная конфигурация Filebeat включает создание шаблонов в Elasticsearch и дашбордов в Kibana. Задачи этого этапа предназначены для однократного выполнения и помечены тегами **never** и **firstrun**.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
+    - hosts: all
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: filebeat-role }
 
 License
 -------
 
 BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
