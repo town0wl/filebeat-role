@@ -1,7 +1,7 @@
 Filebeat role
 =========
 
-Роль для установки, начальной конфигурации и запуска Filebeat на хостах с ОС: Debian, Ubuntu, CentOS, RHEL.
+Роль для установки, начальной конфигурации и запуска Filebeat в виде сервиса на хостах с ОС: Debian, Ubuntu, CentOS, RHEL.
 
 Requirements
 ------------
@@ -15,11 +15,8 @@ Role Variables
 |-----------------------|----------|-------------------------|
 | filebeat_version | "7.14.0" | Параметр, который определяет какой версии Filebeat будет установлен |
 | filebeat_install_type | remote | При установке значения 'remote' загрузка дистрибутива происходит через управляющий хост ansible |
-
-Dependencies
---------------
-
-Для начальной конфигурации Filebeat (/etc/filebeat/filebeat.yml) используются IP-адреса сервера Elasticsearch и сервера Kibana, которые считываются из ansible facts хостов с именем **elastic-host** и **kibana-host** соответственно.
+| elastic_service_ip | Cчитывается из ansible facts хоста с именем ***elastic-host*** | IP-адрес сервиса Elasticsearch |
+| kibana_service_ip | Cчитывается из ansible facts хоста с именем ***kibana-host*** | IP-адрес сервиса Kibana |
 
 Tags
 --------------
