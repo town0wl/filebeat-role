@@ -1,7 +1,7 @@
 galaxy_info:
   author: town0wl
   description: install Filebeat on Linux
-  role_name: filebeat-role
+  role_name: filebeat_role
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value

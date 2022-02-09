@@ -1,0 +1,17 @@
+---
+- name: Install Elastic
+  hosts: elastic
+  handlers:
+    - name: restart Elasticsearch
+      become: true
+      service:
+        name: elasticsearch
+        state: restarted
+  roles:
+  - name: elastic
+    notify: restart Elasticsearch
+
+- name: Install Kibana
+  hosts: kibana
+  roles:
+  - name: kibana-role

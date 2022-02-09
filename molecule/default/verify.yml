@@ -1,0 +1,25 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: Check conf file
+    stat:
+      path: /etc/filebeat/filebeat.yml
+    check_mode: true
+    register: stat_result
+    failed_when: not stat_result.stat.exists
+  - name: Check conf is configured
+    lineinfile:
+      path: /etc/filebeat/filebeat.yml
+      line: 'filebeat.config.modules.path: ${path.config}/modules.d/*.yml'
+      state: present
+    check_mode: true
+    register: conf
+    failed_when: (conf is changed) or (conf is failed)
+  - name: Check Filebeat service
+    service_facts:
+    register: services_state
+    failed_when: services_state['ansible_facts']['services']['filebeat.service']['state'] != 'running'

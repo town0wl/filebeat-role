@@ -1,0 +1,13 @@
+---
+- name: Info
+  hosts: 
+    - elastic-host
+    - kibana
+  tasks:
+
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include filebeat-role"
+      include_role:
+        name: "filebeat-role"

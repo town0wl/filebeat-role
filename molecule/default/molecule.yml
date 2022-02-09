@@ -1,0 +1,47 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: molecule/default/requirements.yml
+driver:
+  name: docker
+platforms:
+  - name: debian
+    image: debian_py_systemd
+    dockerfile: dockerfile_deb
+    pre_build_image: false
+    networks:
+      - name: innernet
+    privileged: true
+    command: /bin/systemd
+  - name: kibana-host
+    image: ubuntu:20.04
+    dockerfile: Dockerfile.j2
+    pre_build_image: false
+    networks:
+      - name: innernet
+    exposed_ports:
+      - "5601"
+    groups:
+      - kibana
+    privileged: true
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  - name: elastic-host
+    image: docker.io/pycontribs/centos:7
+    pre_build_image: true
+    exposed_ports:
+      - "9200"
+    networks:
+      - name: innernet
+    groups:
+      - elastic
+    privileged: true
+    command: /sbin/init
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
