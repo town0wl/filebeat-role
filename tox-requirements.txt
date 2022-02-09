@@ -1,0 +1,8 @@
+molecule==3.4.0
+molecule-docker==1.0.2
+docker
+selinux
+ansible-lint
+yamllint
+six
+urllib3

@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    elastic_service_ip: "10.10.10.10"
+    kibana_service_ip: "10.10.10.10"
+  tasks:
+    - name: "Include filebeat-role"
+      include_role:
+        name: "filebeat-role"

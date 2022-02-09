@@ -1,0 +1,16 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: debian
+    image: debian_py_systemd
+    dockerfile: dockerfile_deb
+    pre_build_image: false
+    privileged: true
+    command: /bin/systemd
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
